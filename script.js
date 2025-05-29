@@ -12,15 +12,25 @@ const stopInterval = () => { clearInterval(intervalID) };
 const formatTime = (num) => String(num).padStart(2, "0");
 
 const getCurrentTime = () => {
-    const currentDate = new Date();
-    currentDate.setHours(currentDate.getHours() - 1);
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
-    const day = currentDate.getDate();
+    const now = new Date();
 
-    const targetTime = new Date(year, month, day, 22, 0, 0);
+    const currentUTC = new Date(Date.UTC(
+        now.getUTCFullYear(),
+        now.getUTCMonth(),
+        now.getUTCDate(),
+        now.getUTCHours(),
+        now.getUTCMinutes(),
+        now.getUTCSeconds()
+    ));
 
-    const difference = targetTime - currentDate;
+    const targetUTC = new Date(Date.UTC(
+        now.getUTCFullYear(),
+        now.getUTCMonth(),
+        now.getUTCDate(),
+        21, 0, 0
+    ));
+
+    const difference = targetUTC - currentUTC;
 
     if (difference <= 0) {
         stopInterval();
